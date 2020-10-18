@@ -2,6 +2,7 @@
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+//Usado a extensão iTextShap.pdf
 
 namespace Tarefa02
 {
