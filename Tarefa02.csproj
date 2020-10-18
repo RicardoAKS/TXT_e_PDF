@@ -17,12 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="PDFNet" Version="8.0.0.76134" />
-    <PackageReference Include="PdfSharp" Version="1.50.5147" />
-    <PackageReference Include="PDFsharp-MigraDoc" Version="1.50.5147" />
-    <PackageReference Include="PDFTron.NETCore.Windows.x64" Version="7.1.0.74119" />
-    <PackageReference Include="Spire.PDF" Version="6.10.0" />
-    <PackageReference Include="Syncfusion.Pdf.WinForms" Version="18.3.0.40" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.2" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

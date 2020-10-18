@@ -1,15 +1,21 @@
 ﻿using System;
 using System.IO;
-using System.Drawing;
-using Spire.Pdf;
-using Spire.Pdf.Graphics;
-
-
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace Tarefa02
 {
     class Program
     {
+        static void ConvertPdf(string input)
+        {
+            StreamReader rdr = new StreamReader(input);
+            Document doc = new Document();
+            PdfWriter.GetInstance(doc, new FileStream("Arquivos/ouput.pdf", FileMode.Create));
+            doc.Open();
+            doc.Add(new Paragraph(rdr.ReadToEnd()));
+            doc.Close();
+        }
         static void Main(string[] args)
         {
             //Nome
@@ -18,11 +24,28 @@ namespace Tarefa02
 
             //Idade
             Console.Write("Idade: \n");
-            int idade = System.Convert.ToInt32(Console.ReadLine());
+            int idade = Convert.ToInt32(Console.ReadLine());
 
             //Sexo
-            Console.WriteLine("Masculino ou Feminino: ");
+            Console.WriteLine("Sexo: M ou F: ");
             string sexo = Console.ReadLine();
+            for (int i = 0; i < 1; i++)
+            {
+                if (sexo == "M" || sexo == "m")
+                {
+                    sexo = "Masculino";
+                }
+                else if (sexo == "F" || sexo == "f")
+                {
+                    sexo = "Feminino";
+                }
+                else
+                {
+                    Console.WriteLine("Digite um opção valida!");
+                    sexo = Console.ReadLine();
+                    i = -1;
+                }
+            }
 
             //Cidade
             Console.WriteLine("Cidade: ");
@@ -32,29 +55,15 @@ namespace Tarefa02
             Console.WriteLine("Endereço: ");
             string endereco = Console.ReadLine();
 
+            //Cria o arquivo .txt com os dados passados pelo usuario
             string writeText = "Nome: " + nome + "\nIdade: " + idade + "\nSexo: " + sexo + "\nCidade: " + cidade + "\nEndereco: " + endereco;
-            File.WriteAllText("input.txt", writeText);
+            File.WriteAllText("Arquivos/input.txt", writeText);
 
-            string readText = File.ReadAllText("input.txt"); 
-            Console.WriteLine(readText);
+            //O arquivo .txt guardado em uma variavel string
+            string input = "input.txt";
 
-            string text = File.ReadAllText("input.txt");
-            PdfDocument doc = new PdfDocument();
-            PdfSection section = doc.Sections.Add();
-            PdfPageBase page = section.Pages.Add();
-            PdfFont font = new PdfFont(PdfFontFamily.Helvetica, 11);
-            PdfStringFormat format = new PdfStringFormat();
-            format.LineSpacing = 20f;
-            PdfBrush brush = PdfBrushes.Black;
-            PdfTextWidget textWidget = new PdfTextWidget(text, font, brush);
-            float y = 0;
-            PdfTextLayout textLayout = new PdfTextLayout();
-            textLayout.Break = PdfLayoutBreakType.FitPage;
-            textLayout.Layout = PdfLayoutType.Paginate;
-            RectangleF bounds = new RectangleF(new PointF(0, y), page.Canvas.ClientSize);
-            textWidget.StringFormat = format;
-            textWidget.Draw(page, bounds, textLayout);
-            doc.SaveToFile("TxtToPDf.pdf", FileFormat.PDF);
+            //Converte .txt para .pdf
+            ConvertPdf(input);
         }
     }
 }
